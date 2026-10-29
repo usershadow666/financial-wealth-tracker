@@ -44,17 +44,17 @@ const DashBoard = () => {
 
   // Compute Financial Aggregates
   const totalIncome = transactions
-    .filter((t) => t.type === "income")
+    .filter((t) => t.type?.toLowerCase() === "income")
     .reduce((acc, curr) => acc + Number(curr.amount), 0);
 
   const totalExpense = transactions
-    .filter((t) => t.type === "expense")
+    .filter((t) => t.type?.toLowerCase() === "expense")
     .reduce((acc, curr) => acc + Number(curr.amount), 0);
 
   const netBalance = totalIncome - totalExpense;
 
   const totalSavedInGoals = goals.reduce(
-    (acc, curr) => acc + Number(curr.savedAmount || 0),
+    (acc, curr) => acc + Number(curr.savedAmount || curr.currentSavings || 0),
     0
   );
 

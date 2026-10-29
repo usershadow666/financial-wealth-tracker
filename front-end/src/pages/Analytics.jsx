@@ -56,7 +56,7 @@ const Analytics = () => {
 
   // 1. Category Breakdown for Expenses (Pie Chart)
   const categoryData = transactions
-    .filter((t) => t.type === "expense")
+    .filter((t) => t.type?.toLowerCase() === "expense")
     .reduce((acc, curr) => {
       const existing = acc.find((item) => item.name === curr.category);
       if (existing) {
@@ -69,11 +69,11 @@ const Analytics = () => {
 
   // 2. Cash Flow Aggregate: Income vs Expenses (Bar Chart)
   const totalIncome = transactions
-    .filter((t) => t.type === "income")
+    .filter((t) => t.type?.toLowerCase() === "income")
     .reduce((acc, curr) => acc + Number(curr.amount), 0);
 
   const totalExpense = transactions
-    .filter((t) => t.type === "expense")
+    .filter((t) => t.type?.toLowerCase() === "expense")
     .reduce((acc, curr) => acc + Number(curr.amount), 0);
 
   const comparisonData = [
@@ -83,8 +83,8 @@ const Analytics = () => {
 
   // 3. Goal Accumulation Progress
   const goalProgressData = goals.map((g) => ({
-    name: g.title.length > 12 ? `${g.title.substring(0, 10)}...` : g.title,
-    Saved: Number(g.savedAmount || 0),
+    name: (g.title || g.goal || "Goal").length > 12 ? `${(g.title || g.goal || "Goal").substring(0, 10)}...` : (g.title || g.goal || "Goal"),
+    Saved: Number(g.savedAmount || g.currentSavings || 0),
     Target: Number(g.targetAmount),
   }));
 
