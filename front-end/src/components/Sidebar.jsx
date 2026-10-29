@@ -27,7 +27,7 @@ const Sidebar = () => {
         <div className="p-2 bg-indigo-600/20 text-indigo-400 rounded-lg">
           <Wallet className="w-5 h-5" />
         </div>
-        <span className="text-lg font-bold text-white tracking-wide">WealthTrail</span>
+        <span className="text-lg font-bold text-white tracking-wide">Expense Tracker</span>
       </div>
 
       {/* Nav Links */}
@@ -55,7 +55,7 @@ const Sidebar = () => {
 
       {/* Footer Info */}
       <div className="p-4 border-t border-slate-800 text-xs text-slate-500">
-        Wealth & Habit Engine v1.0
+        Expense Tracker Engine v1.0
       </div>
     </aside>
   );

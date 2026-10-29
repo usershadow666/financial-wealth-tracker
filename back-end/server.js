@@ -28,7 +28,7 @@ app.use("/api/admin", adminRoutes);
 
 // Health check root route
 app.get("/", (req, res) => {
-  res.send("Wealth Tracker API is running...");
+  res.send("Expense Tracker API is running...");
 });
 
 const PORT = process.env.PORT || 5000;
