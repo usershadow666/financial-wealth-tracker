@@ -11,6 +11,7 @@ import ExpenseTracker from "./pages/ExpenseTracker.jsx";
 import HabitTracker from "./pages/HabitTracker.jsx";
 import SavingGoals from "./pages/SavingGoals.jsx";
 import Analytics from "./pages/Analytics.jsx";
+import AdminPanel from "./pages/AdminPanel.jsx";
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Analytics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminPanel />
               </ProtectedRoute>
             }
           />

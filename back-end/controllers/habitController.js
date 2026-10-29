@@ -15,7 +15,7 @@ export const getHabits = async (req, res) => {
 // @route   POST /api/habits
 export const createHabit = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, frequency } = req.body;
 
     if (!title) {
       return res.status(400).json({ message: "Habit title is required" });
@@ -25,6 +25,7 @@ export const createHabit = async (req, res) => {
       user: req.user._id,
       title,
       description: description || "",
+      frequency: frequency || "daily",
       streak: 0,
       streakLog: [],
     });

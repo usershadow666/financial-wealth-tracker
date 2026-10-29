@@ -14,7 +14,11 @@ import {
 const HabitTracker = () => {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({ title: "", description: "" });
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    frequency: "daily",
+  });
 
   const fetchHabits = async () => {
     try {
@@ -42,7 +46,7 @@ const HabitTracker = () => {
     try {
       const res = await API.post("/habits", formData);
       setHabits([res.data, ...habits]);
-      setFormData({ title: "", description: "" });
+      setFormData({ title: "", description: "", frequency: "daily" });
     } catch (err) {
       console.error("Failed to create habit:", err);
     }
@@ -116,6 +120,22 @@ const HabitTracker = () => {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                    Frequency
+                  </label>
+                  <select
+                    name="frequency"
+                    value={formData.frequency}
+                    onChange={handleChange}
+                    className="w-full bg-slate-800/60 border border-slate-700 rounded-xl py-2.5 px-3.5 text-white text-sm focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+                  >
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
                     Description / Rule (Optional)
                   </label>
                   <textarea
@@ -144,7 +164,7 @@ const HabitTracker = () => {
                 <div>
                   <h2 className="text-lg font-bold text-white">Active Habits</h2>
                   <p className="text-xs text-slate-400 mt-0.5">
-                    {habits.length} recurring routines tracked
+                    Continuous streaks power compounded habits over time.
                   </p>
                 </div>
               </div>
@@ -169,10 +189,15 @@ const HabitTracker = () => {
                       >
                         <div>
                           <div className="flex items-center justify-between mb-2">
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400 text-xs font-semibold">
-                              <Flame className="w-3.5 h-3.5 fill-amber-400" />
-                              {h.streak} {h.streak === 1 ? "Day" : "Days"}
-                            </span>
+                            <div className="flex items-center gap-2">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400 text-xs font-semibold">
+                                <Flame className="w-3.5 h-3.5 fill-amber-400" />
+                                {h.streak} {h.streak === 1 ? "Day" : "Days"}
+                              </span>
+                              <span className="inline-flex items-center px-2 py-0.5 bg-slate-800 text-slate-400 border border-slate-700 rounded-md text-[11px] font-medium capitalize">
+                                {h.frequency || "daily"}
+                              </span>
+                            </div>
 
                             <button
                               onClick={() => handleDelete(h._id)}

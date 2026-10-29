@@ -6,6 +6,7 @@ import {
   CheckSquare,
   Target,
   BarChart3,
+  ShieldCheck,
   Wallet,
 } from "lucide-react";
 
@@ -15,6 +16,7 @@ const navItems = [
   { name: "Habits", path: "/habits", icon: CheckSquare },
   { name: "Goals", path: "/goals", icon: Target },
   { name: "Analytics", path: "/analytics", icon: BarChart3 },
+  { name: "Admin", path: "/admin", icon: ShieldCheck },
 ];
 
 const Sidebar = () => {

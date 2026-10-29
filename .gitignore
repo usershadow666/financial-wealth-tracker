@@ -1,12 +1,12 @@
-# Dependencies
+# Node dependencies
 node_modules/
 */node_modules/
 
-# Environment variables & secrets
+# Environment configurations and secrets
 .env
 */.env
 
-# Build outputs & logs
+# Build outputs
 dist/
 build/
 *.log
