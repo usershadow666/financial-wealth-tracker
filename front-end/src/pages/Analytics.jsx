@@ -125,7 +125,7 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-72 w-full">
+                <div className="h-72 w-full left-50" >
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={comparisonData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
