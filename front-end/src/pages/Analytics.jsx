@@ -131,7 +131,7 @@ const Analytics = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={comparisonData}
-                      margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+                      margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
                       <XAxis dataKey="name" stroke="#94A3B8" fontSize={12} tickLine={false} />
@@ -140,6 +140,7 @@ const Analytics = () => {
                         fontSize={12}
                         tickLine={false}
                         tickFormatter={(val) => `₹${val}`}
+                        width={48}
                       />
                       <Tooltip
                         contentStyle={{
@@ -184,10 +185,12 @@ const Analytics = () => {
                           dataKey="value"
                           nameKey="name"
                           cx="50%"
-                          cy="50%"
-                          innerRadius={50}
-                          outerRadius={75}
+                          cy="48%"
+                          innerRadius={46}
+                          outerRadius={72}
                           paddingAngle={4}
+                          stroke="#0F172A"
+                          strokeWidth={2}
                         >
                           {categoryData.map((entry, index) => (
                             <Cell
@@ -246,7 +249,7 @@ const Analytics = () => {
                       <BarChart
                         data={goalProgressData}
                         barGap={8}
-                        margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+                        margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
                         <XAxis dataKey="name" stroke="#94A3B8" fontSize={12} tickLine={false} />
@@ -255,6 +258,7 @@ const Analytics = () => {
                           fontSize={12}
                           tickLine={false}
                           tickFormatter={(val) => `₹${val}`}
+                          width={48}
                         />
                         <Tooltip
                           contentStyle={{
