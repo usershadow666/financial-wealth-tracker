@@ -92,10 +92,10 @@ const Analytics = () => {
     <div className="min-h-screen bg-slate-950 text-slate-100 flex">
       <Sidebar />
 
-      <div className="flex-1 ml-64 flex flex-col min-h-screen">
+      <div className="flex-1 ml-64 flex flex-col min-h-screen min-w-0">
         <Navbar />
 
-        <main className="p-8 space-y-8 flex-1">
+        <main className="p-8 space-y-8 flex-1 min-w-0">
           <div>
             <h1 className="text-2xl font-bold text-white tracking-tight">
               Visual Wealth Analytics & Insights
@@ -112,7 +112,7 @@ const Analytics = () => {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Cash Flow Distribution */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -125,7 +125,7 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-72 w-full left-0">
+                <div className="h-72 w-full min-w-0">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={comparisonData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
@@ -152,7 +152,7 @@ const Analytics = () => {
               </div>
 
               {/* Expense Allocation by Category */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -165,7 +165,7 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-72 w-full flex items-center justify-center">
+                <div className="h-72 w-full min-w-0 flex items-center justify-center">
                   {categoryData.length === 0 ? (
                     <p className="text-slate-500 text-sm">No expenses logged yet</p>
                   ) : (
@@ -212,7 +212,7 @@ const Analytics = () => {
               </div>
 
               {/* Goal Capital vs Target Progress */}
-              <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
+              <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -225,7 +225,7 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-80 w-full">
+                <div className="h-80 w-full min-w-0">
                   {goalProgressData.length === 0 ? (
                     <div className="h-full flex items-center justify-center text-slate-500 text-sm">
                       No goal milestones established yet
