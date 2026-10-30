@@ -13,11 +13,9 @@ import {
   Pie,
   Cell,
   Legend,
-  LineChart,
-  Line,
   CartesianGrid,
 } from "recharts";
-import { BarChart3, PieChart as PieIcon, TrendingUp, DollarSign } from "lucide-react";
+import { BarChart3, PieChart as PieIcon, TrendingUp } from "lucide-react";
 
 const COLORS = [
   "#6366F1", // Indigo
@@ -83,19 +81,23 @@ const Analytics = () => {
 
   // 3. Goal Accumulation Progress
   const goalProgressData = goals.map((g) => ({
-    name: (g.title || g.goal || "Goal").length > 12 ? `${(g.title || g.goal || "Goal").substring(0, 10)}...` : (g.title || g.goal || "Goal"),
+    name:
+      (g.title || g.goal || "Goal").length > 12
+        ? `${(g.title || g.goal || "Goal").substring(0, 10)}...`
+        : g.title || g.goal || "Goal",
     Saved: Number(g.savedAmount || g.currentSavings || 0),
     Target: Number(g.targetAmount),
   }));
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 ml-64 flex flex-col min-h-screen min-w-0">
+      {/* Main container with explicit width constraints */}
+      <div className="flex-1 ml-64 flex flex-col min-h-screen max-w-[calc(100vw-16rem)] overflow-hidden">
         <Navbar />
 
-        <main className="p-8 space-y-8 flex-1 min-w-0">
+        <main className="p-8 space-y-8 flex-1 overflow-y-auto">
           <div>
             <h1 className="text-2xl font-bold text-white tracking-tight">
               Visual Wealth Analytics & Insights
@@ -110,9 +112,9 @@ const Analytics = () => {
               Crunching analytical data...
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Cash Flow Distribution */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+              {/* Card 1: Inflow vs Outflow */}
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col w-full overflow-hidden">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -125,7 +127,7 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-72 w-full left-50" >
+                <div className="h-72 w-full min-w-0">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={comparisonData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
@@ -143,7 +145,10 @@ const Analytics = () => {
                           borderRadius: "0.75rem",
                           color: "#F8FAFC",
                         }}
-                        formatter={(value) => [`₹${Number(value).toLocaleString("en-IN")}`, "Amount"]}
+                        formatter={(value) => [
+                          `₹${Number(value).toLocaleString("en-IN")}`,
+                          "Amount",
+                        ]}
                       />
                       <Bar dataKey="amount" radius={[8, 8, 0, 0]} />
                     </BarChart>
@@ -151,8 +156,8 @@ const Analytics = () => {
                 </div>
               </div>
 
-              {/* Expense Allocation by Category */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
+              {/* Card 2: Expense Allocation by Category */}
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col w-full overflow-hidden">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -165,20 +170,20 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-72 w-full min-w-0 flex items-center justify-center">
+                <div className="relative h-72 w-full overflow-hidden flex items-center justify-center">
                   {categoryData.length === 0 ? (
                     <p className="text-slate-500 text-sm">No expenses logged yet</p>
                   ) : (
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={50}>
                       <PieChart>
                         <Pie
                           data={categoryData}
                           dataKey="value"
                           nameKey="name"
                           cx="50%"
-                          cy="50%"
-                          innerRadius={60}
-                          outerRadius={95}
+                          cy="45%"
+                          innerRadius={55}
+                          outerRadius={85}
                           paddingAngle={5}
                         >
                           {categoryData.map((entry, index) => (
@@ -202,8 +207,11 @@ const Analytics = () => {
                         />
                         <Legend
                           verticalAlign="bottom"
-                          height={36}
-                          wrapperStyle={{ fontSize: "12px", color: "#94A3B8" }}
+                          wrapperStyle={{
+                            fontSize: "12px",
+                            color: "#94A3B8",
+                            paddingTop: "8px",
+                          }}
                         />
                       </PieChart>
                     </ResponsiveContainer>
@@ -211,8 +219,8 @@ const Analytics = () => {
                 </div>
               </div>
 
-              {/* Goal Capital vs Target Progress */}
-              <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
+              {/* Card 3: Goal Reserve Comparison (Spans 2 columns) */}
+              <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col w-full overflow-hidden">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -225,13 +233,13 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-80 w-full min-w-0">
+                <div className="relative h-80 w-full overflow-hidden">
                   {goalProgressData.length === 0 ? (
                     <div className="h-full flex items-center justify-center text-slate-500 text-sm">
                       No goal milestones established yet
                     </div>
                   ) : (
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={50}>
                       <BarChart data={goalProgressData} barGap={8}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
                         <XAxis dataKey="name" stroke="#94A3B8" fontSize={12} tickLine={false} />
@@ -248,7 +256,9 @@ const Analytics = () => {
                             borderRadius: "0.75rem",
                             color: "#F8FAFC",
                           }}
-                          formatter={(value) => [`₹${Number(value).toLocaleString("en-IN")}`]}
+                          formatter={(value) => [
+                            `₹${Number(value).toLocaleString("en-IN")}`,
+                          ]}
                         />
                         <Legend wrapperStyle={{ fontSize: "12px", color: "#94A3B8" }} />
                         <Bar dataKey="Saved" fill="#6366F1" radius={[6, 6, 0, 0]} />
