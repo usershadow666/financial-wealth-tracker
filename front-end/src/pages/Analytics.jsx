@@ -18,14 +18,14 @@ import {
 import { BarChart3, PieChart as PieIcon, TrendingUp } from "lucide-react";
 
 const COLORS = [
-  "#6366F1", // Indigo
-  "#10B981", // Emerald
-  "#F59E0B", // Amber
-  "#EC4899", // Pink
-  "#8B5CF6", // Purple
-  "#06B6D4", // Cyan
-  "#F43F5E", // Rose
-  "#64748B", // Slate
+  "#6366F1",
+  "#10B981",
+  "#F59E0B",
+  "#EC4899",
+  "#8B5CF6",
+  "#06B6D4",
+  "#F43F5E",
+  "#64748B",
 ];
 
 const Analytics = () => {
@@ -90,14 +90,14 @@ const Analytics = () => {
   }));
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex">
       <Sidebar />
 
-      {/* Main container with explicit width constraints */}
-      <div className="flex-1 ml-64 flex flex-col min-h-screen max-w-[calc(100vw-16rem)] overflow-hidden">
+      {/* min-w-0 prevents flex container from breaking out */}
+      <div className="flex-1 ml-64 flex flex-col min-h-screen min-w-0">
         <Navbar />
 
-        <main className="p-8 space-y-8 flex-1 overflow-y-auto">
+        <main className="p-8 space-y-8 flex-1 min-w-0">
           <div>
             <h1 className="text-2xl font-bold text-white tracking-tight">
               Visual Wealth Analytics & Insights
@@ -112,10 +112,10 @@ const Analytics = () => {
               Crunching analytical data...
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-w-0">
               {/* Card 1: Inflow vs Outflow */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col w-full overflow-hidden">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
+                <div className="flex items-center justify-between mb-4">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
                       <BarChart3 className="w-5 h-5 text-indigo-400" />
@@ -127,9 +127,12 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="h-72 w-full min-w-0">
+                <div className="w-full h-64 min-w-0">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={comparisonData}>
+                    <BarChart
+                      data={comparisonData}
+                      margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+                    >
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
                       <XAxis dataKey="name" stroke="#94A3B8" fontSize={12} tickLine={false} />
                       <YAxis
@@ -150,15 +153,15 @@ const Analytics = () => {
                           "Amount",
                         ]}
                       />
-                      <Bar dataKey="amount" radius={[8, 8, 0, 0]} />
+                      <Bar dataKey="amount" radius={[8, 8, 0, 0]} maxBarSize={60} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
               {/* Card 2: Expense Allocation by Category */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col w-full overflow-hidden">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
+                <div className="flex items-center justify-between mb-4">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
                       <PieIcon className="w-5 h-5 text-indigo-400" />
@@ -170,21 +173,21 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="relative h-72 w-full overflow-hidden flex items-center justify-center">
+                <div className="w-full h-64 min-w-0 flex items-center justify-center">
                   {categoryData.length === 0 ? (
                     <p className="text-slate-500 text-sm">No expenses logged yet</p>
                   ) : (
-                    <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={50}>
+                    <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie
                           data={categoryData}
                           dataKey="value"
                           nameKey="name"
                           cx="50%"
-                          cy="45%"
-                          innerRadius={55}
-                          outerRadius={85}
-                          paddingAngle={5}
+                          cy="50%"
+                          innerRadius={50}
+                          outerRadius={75}
+                          paddingAngle={4}
                         >
                           {categoryData.map((entry, index) => (
                             <Cell
@@ -210,7 +213,7 @@ const Analytics = () => {
                           wrapperStyle={{
                             fontSize: "12px",
                             color: "#94A3B8",
-                            paddingTop: "8px",
+                            paddingTop: "6px",
                           }}
                         />
                       </PieChart>
@@ -219,9 +222,9 @@ const Analytics = () => {
                 </div>
               </div>
 
-              {/* Card 3: Goal Reserve Comparison (Spans 2 columns) */}
-              <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col w-full overflow-hidden">
-                <div className="flex items-center justify-between mb-6">
+              {/* Card 3: Goal Reserve Comparison (Spans Full Width) */}
+              <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
+                <div className="flex items-center justify-between mb-4">
                   <div>
                     <h2 className="text-lg font-bold text-white flex items-center gap-2">
                       <TrendingUp className="w-5 h-5 text-indigo-400" />
@@ -233,14 +236,18 @@ const Analytics = () => {
                   </div>
                 </div>
 
-                <div className="relative h-80 w-full overflow-hidden">
+                <div className="w-full h-72 min-w-0">
                   {goalProgressData.length === 0 ? (
                     <div className="h-full flex items-center justify-center text-slate-500 text-sm">
                       No goal milestones established yet
                     </div>
                   ) : (
-                    <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={50}>
-                      <BarChart data={goalProgressData} barGap={8}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={goalProgressData}
+                        barGap={8}
+                        margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+                      >
                         <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
                         <XAxis dataKey="name" stroke="#94A3B8" fontSize={12} tickLine={false} />
                         <YAxis
@@ -256,13 +263,11 @@ const Analytics = () => {
                             borderRadius: "0.75rem",
                             color: "#F8FAFC",
                           }}
-                          formatter={(value) => [
-                            `₹${Number(value).toLocaleString("en-IN")}`,
-                          ]}
+                          formatter={(value) => [`₹${Number(value).toLocaleString("en-IN")}`]}
                         />
                         <Legend wrapperStyle={{ fontSize: "12px", color: "#94A3B8" }} />
-                        <Bar dataKey="Saved" fill="#6366F1" radius={[6, 6, 0, 0]} />
-                        <Bar dataKey="Target" fill="#334155" radius={[6, 6, 0, 0]} />
+                        <Bar dataKey="Saved" fill="#6366F1" radius={[6, 6, 0, 0]} maxBarSize={45} />
+                        <Bar dataKey="Target" fill="#334155" radius={[6, 6, 0, 0]} maxBarSize={45} />
                       </BarChart>
                     </ResponsiveContainer>
                   )}
