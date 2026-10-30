@@ -65,7 +65,6 @@ const Analytics = () => {
       return acc;
     }, []);
 
-  // 2. Cash Flow Aggregate: Income vs Expenses (Bar Chart)
   const totalIncome = transactions
     .filter((t) => t.type?.toLowerCase() === "income")
     .reduce((acc, curr) => acc + Number(curr.amount), 0);
@@ -79,7 +78,6 @@ const Analytics = () => {
     { name: "Total Outflow", amount: totalExpense, fill: "#F43F5E" },
   ];
 
-  // 3. Goal Accumulation Progress
   const goalProgressData = goals.map((g) => ({
     name:
       (g.title || g.goal || "Goal").length > 12
@@ -93,7 +91,6 @@ const Analytics = () => {
     <div className="min-h-screen bg-slate-950 text-slate-100 flex">
       <Sidebar />
 
-      {/* min-w-0 prevents flex container from breaking out */}
       <div className="flex-1 ml-64 flex flex-col min-h-screen min-w-0">
         <Navbar />
 
@@ -113,7 +110,6 @@ const Analytics = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-w-0">
-              {/* Card 1: Inflow vs Outflow */}
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -131,14 +127,21 @@ const Analytics = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={comparisonData}
-                      margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+                      margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
-                      <XAxis dataKey="name" stroke="#94A3B8" fontSize={12} tickLine={false} />
+                      <XAxis
+                        dataKey="name"
+                        stroke="#94A3B8"
+                        fontSize={12}
+                        tickLine={false}
+                        axisLine={false}
+                      />
                       <YAxis
                         stroke="#94A3B8"
                         fontSize={12}
                         tickLine={false}
+                        axisLine={false}
                         tickFormatter={(val) => `₹${val}`}
                         width={48}
                       />
@@ -160,7 +163,6 @@ const Analytics = () => {
                 </div>
               </div>
 
-              {/* Card 2: Expense Allocation by Category */}
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -179,15 +181,15 @@ const Analytics = () => {
                     <p className="text-slate-500 text-sm">No expenses logged yet</p>
                   ) : (
                     <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
+                      <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 20 }}>
                         <Pie
                           data={categoryData}
                           dataKey="value"
                           nameKey="name"
                           cx="50%"
-                          cy="48%"
-                          innerRadius={46}
-                          outerRadius={72}
+                          cy="45%"
+                          innerRadius={48}
+                          outerRadius={78}
                           paddingAngle={4}
                           stroke="#0F172A"
                           strokeWidth={2}
@@ -212,11 +214,13 @@ const Analytics = () => {
                           ]}
                         />
                         <Legend
+                          layout="horizontal"
                           verticalAlign="bottom"
+                          align="center"
                           wrapperStyle={{
                             fontSize: "12px",
                             color: "#94A3B8",
-                            paddingTop: "6px",
+                            paddingTop: "10px",
                           }}
                         />
                       </PieChart>
@@ -225,7 +229,6 @@ const Analytics = () => {
                 </div>
               </div>
 
-              {/* Card 3: Goal Reserve Comparison (Spans Full Width) */}
               <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-w-0">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -249,14 +252,21 @@ const Analytics = () => {
                       <BarChart
                         data={goalProgressData}
                         barGap={8}
-                        margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+                        margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
-                        <XAxis dataKey="name" stroke="#94A3B8" fontSize={12} tickLine={false} />
+                        <XAxis
+                          dataKey="name"
+                          stroke="#94A3B8"
+                          fontSize={12}
+                          tickLine={false}
+                          axisLine={false}
+                        />
                         <YAxis
                           stroke="#94A3B8"
                           fontSize={12}
                           tickLine={false}
+                          axisLine={false}
                           tickFormatter={(val) => `₹${val}`}
                           width={48}
                         />
@@ -269,7 +279,10 @@ const Analytics = () => {
                           }}
                           formatter={(value) => [`₹${Number(value).toLocaleString("en-IN")}`]}
                         />
-                        <Legend wrapperStyle={{ fontSize: "12px", color: "#94A3B8" }} />
+                        <Legend
+                          wrapperStyle={{ fontSize: "12px", color: "#94A3B8" }}
+                          align="center"
+                        />
                         <Bar dataKey="Saved" fill="#6366F1" radius={[6, 6, 0, 0]} maxBarSize={45} />
                         <Bar dataKey="Target" fill="#334155" radius={[6, 6, 0, 0]} maxBarSize={45} />
                       </BarChart>
